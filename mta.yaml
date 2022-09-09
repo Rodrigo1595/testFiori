@@ -15,32 +15,6 @@ build-parameters:
 
 modules:
 
-  # --------------------- SERVER MODULE ------------------------
-  - name: app-srv
-  # ------------------------------------------------------------
-    type: nodejs
-    path: gen/srv
-    build-parameters:
-      ignore:
-        - default-*.json
-        - .env
-        - "*node_modules*"
-        - package-lock.json
-    parameters:
-      buildpack: nodejs_buildpack
-      memory: 512M
-      disk-quota: 1024M
-    requires:
-      - name: app-uaa
-    provides:
-      - name: srv-api
-        properties:
-          srv-url: ${default-url}
-
-
-
-
-
   # ----------- HTML5 APP REPOSITORY APP HTML5 MODULE ----------
   - name: app-html5
   # ------------------------------------------------------------
@@ -88,7 +62,6 @@ modules:
         parameters:
           service-key:
             name: app-html5repo-sk
-      - name: srv-api
     parameters:
       content:
         instance:
@@ -127,8 +100,6 @@ resources:
   - name: app-dest
   # ------------------------------------------------------------
     type: org.cloudfoundry.managed-service
-    requires:
-      - name: srv-api
     parameters:
       service: destination
       service-plan: lite
